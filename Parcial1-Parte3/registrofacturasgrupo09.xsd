@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="registro">
+    <xs:complexType>
+      <xs:sequence>
+                <xs:element name="responsable" type="xs:string"/>
+                <xs:element name="factura" type="tipofactura" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  
+  
+<xs:group name="grupodocumento">
+ <xs:sequence>
+  <xs:element name="documentos">  
+   <xs:complexType>
+     <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="1">
+           <xs:element name="dui" > 
+              <xs:complexType >
+                <xs:simpleContent>
+                  <xs:extension base="tipodui">
+                    <xs:attribute name="vence" type="tipovencimiento" use="required"/>
+                  </xs:extension>
+                </xs:simpleContent>
+              </xs:complexType>
+            </xs:element>
+            
+             <xs:element name="pasaporte" > 
+              <xs:complexType >
+                <xs:simpleContent>
+                  <xs:extension base="tipopasaporte">
+                    <xs:attribute name="pais" type="xs:string" use="required"/>
+                  </xs:extension>
+                </xs:simpleContent>
+              </xs:complexType>
+            </xs:element>
+      </xs:choice>
+     </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+  </xs:sequence>
+</xs:group>
+
+<xs:group name="grupocliente">
+<xs:sequence>
+  <xs:element name="nombre">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+           <xs:pattern value="[A-Z]*"/>
+        </xs:restriction>  
+      </xs:simpleType>
+    </xs:element>
+    
+   <xs:complexType name="documento">  
+   <xs:sequence> 
+     <xs:group ref="grupodocumento"/>
+   </xs:sequence>
+ </xs:complexType>
+ 
+ <xs:element name="telefono">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+           <xs:pattern value="[A-Z]*"/>
+        </xs:restriction>  
+      </xs:simpleType>
+    </xs:element>
+    
+    <xs:element name="email">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+           <xs:pattern value="[A-Z]*"/>
+        </xs:restriction>  
+      </xs:simpleType>
+    </xs:element>
+    
+    </xs:sequence>
+</xs:group>
+    
+<xs:group name="precios">
+<xs:sequence>
+  <xs:element name="moneda">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+           <xs:pattern value="[A-Z]*"/>
+        </xs:restriction>  
+      </xs:simpleType>
+    </xs:element>
+    
+ 
+ <xs:element name="valor">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+           <xs:pattern value="[A-Z]*"/>
+        </xs:restriction>  
+      </xs:simpleType>
+    </xs:element>
+    
+  </xs:sequence>
+</xs:group>
+
+<xs:group name="tiposubtotal">
+<xs:sequence>
+  <xs:element name="moneda">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+           <xs:pattern value="[A-Z]*"/>
+        </xs:restriction>  
+      </xs:simpleType>
+    </xs:element>
+    
+ <xs:element name="valor">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+           <xs:pattern value="[A-Z]*"/>
+        </xs:restriction>  
+      </xs:simpleType>
+    </xs:element>
+    
+  </xs:sequence>
+</xs:group>
+
+</xs:schema>
