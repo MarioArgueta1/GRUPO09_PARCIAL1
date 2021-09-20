@@ -121,5 +121,24 @@
     
   </xs:sequence>
 </xs:group>
-
+  <!-- Grupos III.1.5 -->
+    <!-- Cliente -->
+    <xs:group name="clienteGroup">
+        <xs:sequence>
+            <xs:element name="nombre" type="xs:string"></xs:element>
+            <xs:element name="documento" type="documentoType"></xs:element>
+            <xs:element name="telefono" type="telefonoType"></xs:element>
+            <xs:element name="email" type="emailType"></xs:element>
+        </xs:sequence>
+    </xs:group>
+    <!-- lineaFactura -->
+    <xs:group name="lineaFacturaGroup">
+        <xs:sequence>
+            <xs:element name="codigo" type="codigoLineaType"></xs:element>
+            <xs:element name="detalle" type="xs:string"></xs:element>
+            <xs:element name="cantidad" type="xs:integer"></xs:element>
+            <xs:element name="precio" type="DineroType"></xs:element>
+            <xs:element name="subtotal" type="DineroType"></xs:element>
+        </xs:sequence>
+    </xs:group>
 </xs:schema>
