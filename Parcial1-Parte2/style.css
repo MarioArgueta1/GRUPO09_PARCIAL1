@@ -1,0 +1,52 @@
+@charset 'utf-8';
+body{
+    width: 100%;
+    margin: auto;
+    margin-top: 10px;
+    background: linear-gradient(15deg, salmon, transparent);
+    font-weight: bold;
+    line-height: 60px;
+    border-spacing: 50px;
+    border-top: 40px groove;
+    text-align: center;
+    display: block;
+    margin-bottom: 50px;
+    font-size:50px;
+    text-shadow: -1px 0 black, 0 3px black, 1px 0 black, 0 -1px black;
+    font-family: sans; 
+    color: salmon;
+}
+
+table{
+     background-color: white;
+    display: table;
+    width: 70%;
+    border: 2px solid black;
+    text-align: justify;
+    margin: auto;
+}
+
+.trtelefono{
+border-bottom: 2px solid black;
+}
+
+.tduno{
+    border-bottom: 2px solid black;
+}
+
+.tddos{
+    border: 2px solid black;
+    width:15%;
+}
+.tddetalle{
+    border: 2px solid black;
+        width: 40%;
+}
+
+td{
+    color: black;
+     text-shadow: none;
+     font-family: sans;
+         font-weight: bold;
+    font-size: 18px;
+}
