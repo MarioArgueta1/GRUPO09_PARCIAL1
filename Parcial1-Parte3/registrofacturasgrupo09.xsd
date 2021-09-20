@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="registros">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element ref="registro" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+    
+      <xs:element name="registro">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element name="periodo" type="xs:string"/>
+          <xs:element ref="factura" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="numero" type="xs:positiveInteger" use="required"/>
+        <xs:attribute name="responsable" type="xs:string" use="required"/>
+      </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="factura">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element name="fechaEmision" type="xs:date"/>
+          <xs:element ref="cliente" minOccurs="1"/>
+          <xs:element ref="direccion" minOccurs="0"/>
+          <xs:element ref="lineafactura" minOccurs="1"/>
+          <xs:element ref="impuesto" minOccurs="0"/>
+          <xs:element name="total" type="precio"/>
+        </xs:sequence>
+        <xs:attribute name="num" type="xs:integer" use="required"/>
+        <xs:attribute name="tipo" type="tipofact" use="required"/>
+      </xs:complexType>
+    </xs:element>
+    
+     <xs:simpleType name="precio">
+      <xs:restriction base="xs:decimal">
+        <xs:minExclusive value="0"/>
+        <xs:totalDigits value="5"/>
+        <xs:fractionDigits value="2"/>
+      </xs:restriction>
+     </xs:simpleType>
+     
+    <xs:element name="cliente">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="nombre" type="xs:string"/>
+        <xs:element ref="documento"/>
+        
+  <xs:element name="telefono" type="tipotelfs" minOccurs="0"/>
+  
+        <xs:element name="email" type="tipoemail"/>
+      </xs:sequence>
+      <xs:attribute name="cod" type="xs:integer" use="required"/>
+      <xs:attribute name="sexo" type="tipogenero"/>
+  <xs:attribute name="estadoCivil" type="estadocivil"/>
+    </xs:complexType>
+    </xs:element> 
+    
+    <xs:simpleType name="tipofact">
+      <xs:restriction base="xs:string">
+      <xs:pattern value="final|credito"/>
+      </xs:restriction>
+    </xs:simpleType>
+      
+    <xs:element name="documento">
+      <xs:complexType>
+        <xs:choice>
+          <xs:element ref="dui"/>
+          <xs:element ref="pasaporte"/>
+        </xs:choice>
+      </xs:complexType>
+    </xs:element>
+    
+     <xs:element name="dui">
+        <xs:complexType>
+        <xs:simpleContent>
+          <xs:extension base="tipoDUI">
+          <xs:attribute name="vence" type="xs:date" use="required"/>
+          </xs:extension>
+        </xs:simpleContent>
+        </xs:complexType>  
+      </xs:element>
+    
+    <xs:simpleType name="tipoDUI">
+        <xs:restriction base="xs:token">
+        <xs:pattern value="[0-9]{7,8}-[0-9]{1}"/>
+        </xs:restriction>
+    </xs:simpleType>
+      
+      <xs:element name="pasaporte">
+        <xs:complexType>
+        <xs:simpleContent>
+          <xs:extension base="tipoPasaporte">
+          <xs:attribute name="pais" type="tipoPais" use="required"/>
+          </xs:extension>
+        </xs:simpleContent>
+        </xs:complexType>  
+      </xs:element>
+      
+        <xs:simpleType name="tipoPasaporte">
+        <xs:restriction base="xs:token">
+        <xs:pattern value="[A-Z]{1}[0-9]{8}"/>
+        </xs:restriction>
+      </xs:simpleType>
+      
+       <xs:simpleType name="tipoPais">
+        <xs:restriction base="xs:token">
+        <xs:pattern value="[A-Z]{3}"/>
+        </xs:restriction>
+      </xs:simpleType>
+      
+      
+      <xs:complexType name="tipotelfs">
+        <xs:sequence>
+        <xs:group ref="grupotelfs"/>
+        </xs:sequence>
+      </xs:complexType>
+
+  <xs:group name="grupotelfs">
+          <xs:sequence>
+          <xs:element name="fijo">
+          <xs:simpleType>
+            <xs:restriction base="xs:integer">
+            <xs:pattern value="2[0-9]{7}"/>
+            </xs:restriction>
+            </xs:simpleType>
+            </xs:element>
+          <xs:element name="celular">
+            <xs:complexType>
+            <xs:simpleContent>
+            <xs:extension base="tipocel">
+            <xs:attribute name="compania" type="tipocia" use="required"/>
+            </xs:extension>
+            </xs:simpleContent>
+            </xs:complexType>
+          </xs:element>
+          </xs:sequence>
+      </xs:group>
+  <xs:element name="celular">
+  <xs:complexType>
+        <xs:simpleContent>
+          <xs:extension base="tipocel">
+          <xs:attribute name="compania" type="tipocia" use="required"/>
+          </xs:extension>
+        </xs:simpleContent>
+        </xs:complexType>  
+  </xs:element>
+
+    <xs:simpleType name="tipocel">
+      <xs:restriction base="xs:integer">
+      <xs:pattern value="7[0-9]{7}"/>
+      </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="tipocia">
+      <xs:restriction base="xs:string">
+      <xs:pattern value="movistar|claro|digicel|tigo"/>
+      </xs:restriction>
+    </xs:simpleType>
+    
+
+    <xs:simpleType name="tipoemail">
+      <xs:restriction base="xs:string">
+      <xs:pattern value=".+@.+\..{3,4}"/>
+      </xs:restriction>
+    </xs:simpleType>
+
+    
+    <xs:element name="direccion">
+      <xs:complexType>
+      <xs:sequence>
+          <xs:choice>
+          <xs:element name="casa" type="xs:string"/>
+              <xs:element name="oficina" type="xs:string"/>
+          </xs:choice>
+          <xs:element name="municipio" type="xs:string"/>
+      </xs:sequence>
+      <xs:attribute name="depto" type="xs:string" use="required"/>
+      </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="lineafactura">
+      <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="codigo"/>
+        <xs:element name="descripcion" type="xs:string"/>
+        <xs:element name="cantidad" type="xs:positiveInteger" minOccurs="1"/>
+        <xs:element name="precio" type="precio"/>
+        <xs:element name="subtotal" type="precio"/>
+      </xs:sequence>
+      <xs:attribute name="factura" type="xs:positiveInteger" use="required"/>
+      <xs:attribute name="moneda" type="xs:string"/>
+      </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="codigo">
+    <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:positiveInteger">
+      <xs:attribute name="tipo" type="xs:string" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+    </xs:complexType>  
+   </xs:element>
+   
+   <xs:element name="impuesto">
+   <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:decimal">
+      <xs:attribute name="valor" type="xs:string" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+    </xs:complexType>  
+   </xs:element>
+    
+    <xs:simpleType name="tipogenero">
+      <xs:restriction base="xs:string">
+      <xs:enumeration value="Masculino"/>
+      <xs:enumeration value="Femenino"/>
+	  <xs:enumeration value="Otro"/>
+      </xs:restriction>
+    </xs:simpleType>
+	
+	<xs:simpleType name="estadocivil">
+      <xs:restriction base="xs:string">
+      <xs:enumeration value="Solter@"/>
+      <xs:enumeration value="Casad@"/>
+	  <xs:enumeration value="Viud@"/>
+      </xs:restriction>
+    </xs:simpleType>
+		
+</xs:schema>
