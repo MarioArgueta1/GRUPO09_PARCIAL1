@@ -21,17 +21,22 @@
                 <tr> <td class="tddos">codigo</td><td class="tddetalle">detalle</td> <td class="tddos">cantidad</td><td class="tddos">precio</td><td class="tddos">subtotal</td></tr>
                 
             <xsl:apply-templates select="lineafactura"/>
+            <tr> 
+      <td colspan="4" class="tddos"> total </td><td class="tddos"> <xsl:value-of select="total"/> </td>
+     </tr>
             
             </table>
           <p></p>
           </body>
       </html>    
   </xsl:template>
-   
   
    <xsl:template match="lineafactura">
       <tr> <td class="tddos"> <xsl:value-of select="codigo"/> </td><td class="tddos"> <xsl:value-of select="detalle"/> </td><td class="tddos"> <xsl:value-of select="cantidad"/> </td><td class="tddos"> <xsl:value-of select="precio"/> </td><td class="tddos"> <xsl:value-of select="subtotal"/> </td>
      </tr>  
+     
   </xsl:template> 
+  
+  
   
 </xsl:stylesheet>
